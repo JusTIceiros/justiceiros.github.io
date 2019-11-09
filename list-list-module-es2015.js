@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n    </ion-buttons>\n    <ion-title>\n      Tramitação de registros\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor=\"let item of items\">\n      <ion-icon [name]=\"item.icon\" slot=\"start\"></ion-icon>\n      {{item.title}}\n     \n    </ion-item>\n  </ion-list>\n\n  <ion-card class=\"welcome-card\">\n\n    <ion-card-header>\n      \n      <ion-card-title>Denúncia 01</ion-card-title>\n      <br><br>\n      <ion-button color=\"primary\" (click)=\"tramita()\">Tramita denúncia</ion-button>\n    </ion-card-header>\n    <ion-card-content>\n   \n    </ion-card-content>\n  </ion-card>\n\n  \n  <!--\n    <div *ngIf=\"selectedItem\" padding>\n      You navigated here from <b>{{selectedItem.title }}</b>\n    </div>\n  -->\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n    </ion-buttons>\n    <ion-title>\n      Tramitação de registros\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-list>\n    <ion-item *ngFor=\"let item of items\">\n      <ion-icon [name]=\"item.icon\" slot=\"start\"></ion-icon>\n      {{item.title}}\n     \n    </ion-item>\n  </ion-list>\n\n  <ion-card class=\"welcome-card\">\n\n    <ion-card-header>\n      \n      <ion-card-title>Denúncia 01</ion-card-title>\n      <br><br>\n      <ion-item>\n        <ion-label>Mensagem</ion-label>\n    </ion-item>\n    <ion-item>\n      <ion-input  clearInput [(ngModel)]=\"msg\" name=\"msg\"></ion-input>\n  </ion-item>\n      <ion-button color=\"primary\" (click)=\"tramita()\">Tramita denúncia</ion-button>\n    </ion-card-header>\n    <ion-card-content>\n   \n    </ion-card-content>\n  </ion-card>\n\n  \n  <!--\n    <div *ngIf=\"selectedItem\" padding>\n      You navigated here from <b>{{selectedItem.title }}</b>\n    </div>\n  -->\n</ion-content>\n"
 
 /***/ }),
 
@@ -116,8 +116,8 @@ let ListPage = class ListPage {
     }
     tramita() {
         let url = 'https://esb-hom.trt5.jus.br/justiceiros/service/enviarPush';
-        this.retorno = this.http.post(url, 'teste', null).toPromise();
-        console.log(this.retorno);
+        this.retorno = this.http.post(url, this.msg, null).toPromise();
+        console.log(this.msg);
     }
 };
 ListPage.ctorParameters = () => [
