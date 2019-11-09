@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n    </ion-buttons>\n    <ion-title>\n      Mapa de denúncias\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-grid>\n        <ion-row>\n          <ion-col>\n              <ion-item>\n                  <ion-label>Tipo de denúncia</ion-label>\n                  <ion-select placeholder=\"Selecione um\">\n                      <ion-select-option value=\"f\">Todos</ion-select-option>\n                    <ion-select-option value=\"f\">Violência contra mulher</ion-select-option>\n                    <ion-select-option value=\"m\">Tráfico de drogas</ion-select-option>\n                    <ion-select-option value=\"m\">Homicídio</ion-select-option>\n                    <ion-select-option value=\"m\">Crimes contra patrimônio</ion-select-option>\n                  </ion-select>\n                </ion-item>\n          </ion-col>\n          <ion-col>\n              <ion-item>\n                  <ion-label>Município</ion-label>\n                  <ion-select placeholder=\"Selecione um\">\n                      <ion-select-option value=\"f\">Todos</ion-select-option>\n                    <ion-select-option value=\"f\">Salvador</ion-select-option>\n                    <ion-select-option value=\"m\">Lauro de Freitas</ion-select-option>\n                    <ion-select-option value=\"m\">Simões Filho</ion-select-option>\n                    <ion-select-option value=\"m\">Feira de Santana</ion-select-option>\n                  </ion-select>\n                </ion-item>\n          </ion-col>\n        \n        </ion-row>\n        <ion-row>\n          <ion-col>\n              <ion-button color=\"primary\"(click)=\"getMap()\">Consulta</ion-button>\n          </ion-col>\n        </ion-row>\n        </ion-grid>\n\n    <ion-card class=\"welcome-card\">\n      <!-- <img src=\"/assets/logo-mp.svg\" alt=\"\" /> -->\n      <!-- <img src=\"mapUrl\" alt=\"\" /> -->\n\n      <img style=\"width:400px;height:400px;\" [src]=\"sanitize(mapUrl)\" />\n    \n\n    </ion-card>\n\n</ion-content>\n"
+module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"start\">\n      <ion-menu-button></ion-menu-button>\n    </ion-buttons>\n    <ion-title>\n      Mapa de denúncias\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n    <ion-grid>\n        <ion-row>\n          <ion-col>\n              <ion-item>\n                  <ion-label>Tipo de denúncia</ion-label>\n                  <ion-select placeholder=\"Selecione um\">\n                      <ion-select-option value=\"f\">Todos</ion-select-option>\n                    <ion-select-option value=\"f\">Violência contra mulher</ion-select-option>\n                    <ion-select-option value=\"m\">Tráfico de drogas</ion-select-option>\n                    <ion-select-option value=\"m\">Homicídio</ion-select-option>\n                    <ion-select-option value=\"m\">Crimes contra patrimônio</ion-select-option>\n                  </ion-select>\n                </ion-item>\n          </ion-col>\n          <ion-col>\n              <ion-item>\n                  <ion-label>Município</ion-label>\n                  <ion-select placeholder=\"Selecione um\">\n                      <ion-select-option value=\"f\">Todos</ion-select-option>\n                    <ion-select-option value=\"f\">Salvador</ion-select-option>\n                    <ion-select-option value=\"m\">Lauro de Freitas</ion-select-option>\n                    <ion-select-option value=\"m\">Simões Filho</ion-select-option>\n                    <ion-select-option value=\"m\">Feira de Santana</ion-select-option>\n                  </ion-select>\n                </ion-item>\n          </ion-col>\n        \n        </ion-row>\n        <ion-row>\n          <ion-col>\n              <ion-button color=\"primary\"(click)=\"getMap()\">Consulta</ion-button>\n          </ion-col>\n        </ion-row>\n        </ion-grid>\n\n    <ion-card>\n      <!-- <img src=\"/assets/logo-mp.svg\" alt=\"\" /> -->\n      <img  [src]=\"mapUrl\" alt=\"\" />\n\n      <!-- <img style=\"width:400px;height:400px;\" [src]=\"sanitize(mapUrl)\" /> -->\n    \n\n    </ion-card>\n\n</ion-content>\n"
 
 /***/ }),
 
@@ -97,20 +97,22 @@ let HomePage = class HomePage {
     }
     getMap() {
         let url = 'https://esb-hom.trt5.jus.br/justiceiros/service/healthcheck';
-        url = 'https://maps.googleapis.com/maps/api/staticmap?center=sao%20marcos,salvador,bahia,brasil&zoom=12&size=700x700&maptype=roadmap&markers=rua%20raul%20leite%20990%20ap%20404,BA&markers=largo%202%20de%20julho,BA&markers=rio%20vermelho,BA&markers=patamares,BA&markers=paralela,BA&key=AIzaSyAwXgvxWrgfpqDSXL0_iTarEY18N09y1RM';
+        this.mapUrl = 'https://maps.googleapis.com/maps/api/staticmap?center=sao%20marcos,salvador,bahia,brasil&zoom=12&size=700x700&maptype=roadmap&markers=rua%20raul%20leite%20990%20ap%20404,BA&markers=largo%202%20de%20julho,BA&markers=rio%20vermelho,BA&markers=patamares,BA&markers=paralela,BA&key=AIzaSyAwXgvxWrgfpqDSXL0_iTarEY18N09y1RM';
         this.http.get(url, null).toPromise().then((response) => {
             let novoResponse = response;
-            var blob = new Blob([novoResponse._body], {
-                type: 'image/png'
-            });
+            // let blob1 = new Blob([novoResponse._body], {type: 'image/png'})
+            // this.mapUrl = URL.createObjectURL(blob1)
+            //    var blob = new Blob([novoResponse._body], {
+            //   type: 'image/png'
+            // });
             //this.mapUrl = 'data:image/png;base64,'+ novoResponse._body;
             // this.sanitizer.bypassSecurityTrustHtml(this.mapUrl)
-            var reader = new FileReader();
-            reader.readAsDataURL(blob);
-            reader.onloadend = () => {
-                this.mapUrl = reader.result;
-                console.log(this.mapUrl);
-            };
+            // var reader = new FileReader();
+            //     reader.readAsDataURL(blob);
+            //     reader.onloadend = () => {
+            //       this.mapUrl = reader.result;
+            //       console.log(this.mapUrl);
+            //     }
         });
     }
     sanitize(url) {
